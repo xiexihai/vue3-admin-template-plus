@@ -5,7 +5,10 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/vue3-admin-template-plus/',
+  base: "/vue3-admin-template-plus/",
+  build: {
+    outDir: "docs"
+  },
   plugins: [
     vue(),
   ],
