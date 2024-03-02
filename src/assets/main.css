@@ -1,5 +1,9 @@
 @import './base.css';
 
+body {
+  background-color: #f5f7f9;
+}
+
 /* #app {
   max-width: 1280px;
   margin: 0 auto;
