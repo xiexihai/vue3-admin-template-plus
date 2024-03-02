@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { RouterView } from 'vue-router'
 import AsideView from '../aside/AsideView.vue';
 import HeaderView from '../header/HeaderView.vue';
-import MainView from '@/views/main/MainView.vue';
+// import MainView from '@/views/main/MainView.vue';
 </script>
 
 <template>
@@ -13,7 +14,8 @@ import MainView from '@/views/main/MainView.vue';
       <HeaderView />
 
       <div class="g-layout-body">
-        <MainView />
+        <!-- <MainView /> -->
+        <RouterView />
       </div>
     </div>
   </div>

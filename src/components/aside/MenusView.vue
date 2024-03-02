@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import {
-  Document,
-  Menu as IconMenu,
-  Location,
   Setting,
+  Odometer,
+  Discount,
+  Aim
 } from '@element-plus/icons-vue'
-
+const router = useRouter()
 const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
+}
+const handleRouterLink = (url: string) => {
+  console.log(url)
+  router.push(url)
 }
 </script>
 
@@ -24,38 +29,40 @@ const handleClose = (key: string, keyPath: string[]) => {
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-sub-menu index="1">
+    <el-menu-item index="1" @click="handleRouterLink('/')">
+      <el-icon><Odometer /></el-icon>
+      <template #title>控制台</template>
+    </el-menu-item>
+    <el-sub-menu index="2">
       <template #title>
-        <el-icon><location /></el-icon>
-        <span>控制台</span>
+        <el-icon><Setting /></el-icon>
+        <span>系统管理</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="1-1">用户管理</el-menu-item>
-        <el-menu-item index="1-2">菜单权限管理</el-menu-item>
-        <el-menu-item index="1-3">角色权限管理</el-menu-item>
-        <el-menu-item index="1-4">基础表单</el-menu-item>
-        <el-menu-item index="1-4-1">基础列表</el-menu-item>
+        <el-menu-item index="2-1" @click="handleRouterLink('/system/user')">用户管理</el-menu-item>
+        <el-menu-item index="2-2" @click="handleRouterLink('/system/menus')">菜单权限管理</el-menu-item>
+        <el-menu-item index="2-3" @click="handleRouterLink('/system/role')">角色权限管理</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
-    <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
-      <template #title>搜索页面</template>
-    </el-menu-item>
-    <el-menu-item index="3">
-      <el-icon><document /></el-icon>
-      <template #title>详情页面</template>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <el-icon><setting /></el-icon>
-      <template #title>结果页面</template>
-    </el-menu-item>
-    <el-sub-menu index="5">
+    <el-sub-menu index="3">
       <template #title>
-        <el-icon><location /></el-icon>
+        <el-icon><Discount /></el-icon>
+        <span>表单页面</span>
+      </template>
+      <el-menu-item-group>
+        <el-menu-item index="3-1" @click="handleRouterLink('/form/basic')">基础表单</el-menu-item>
+        <el-menu-item index="3-2" @click="handleRouterLink('/form/grade')">高级表单</el-menu-item>
+        <el-menu-item index="3-3" @click="handleRouterLink('/form/detail')">表单详情</el-menu-item>
+      </el-menu-item-group>
+    </el-sub-menu>
+    <el-sub-menu index="4">
+      <template #title>
+        <el-icon><Aim /></el-icon>
         <span>设置页面</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="5-1">系统设置</el-menu-item>
+        <el-menu-item index="4-1" @click="handleRouterLink('/setting/user')">个人设置</el-menu-item>
+        <el-menu-item index="4-2" @click="handleRouterLink('/setting/account')">账户设置</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
   </el-menu>
