@@ -1,1 +1,0 @@
-import{_ as s,r as n,o as c,c as r,a as t,w as a,b as _,d as o}from"./index-Bdosz2B3.js";const l={},d={class:"about"},u=_("h1",null,"This is an about page",-1);function i(p,f){const e=n("el-button");return c(),r("div",d,[u,t(e,null,{default:a(()=>[o("aa")]),_:1}),t(e,{type:"primary"},{default:a(()=>[o("aaa")]),_:1})])}const b=s(l,[["render",i]]);export{b as default};
