@@ -13,7 +13,7 @@ import { ArrowRight } from '@element-plus/icons-vue'
 <style scoped>
 .g-breadcrumb {
   padding: 16px;
-
+  flex: 1;
 }
 </style>
 

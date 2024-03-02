@@ -3,7 +3,9 @@
 body {
   background-color: #f5f7f9;
 }
-
+.dark body {
+  background-color: var(--ba-bg-color);
+}
 /* #app {
   max-width: 1280px;
   margin: 0 auto;

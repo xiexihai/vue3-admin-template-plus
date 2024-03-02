@@ -24,8 +24,8 @@ const handleRouterLink = (url: string) => {
 <template>
   <el-menu
     default-active="2"
-    class="el-menu-vertical-demo"
     :collapse="isCollapse"
+    class="g-aside-menus"
     @open="handleOpen"
     @close="handleClose"
   >
@@ -68,4 +68,11 @@ const handleRouterLink = (url: string) => {
   </el-menu>
 </template>
 
-<style scoped></style>
+<style scoped>
+.g-aside-menus /deep/ .el-menu-item-group__title {
+  padding: 0;
+}
+.g-aside-menus {
+  border-right: none;
+}
+</style>

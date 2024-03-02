@@ -2,7 +2,6 @@
 import { RouterView } from 'vue-router'
 import AsideView from '../aside/AsideView.vue';
 import HeaderView from '../header/HeaderView.vue';
-// import MainView from '@/views/main/MainView.vue';
 </script>
 
 <template>
@@ -12,10 +11,13 @@ import HeaderView from '../header/HeaderView.vue';
     </div>
     <div class="g-layout-main">
       <HeaderView />
-
       <div class="g-layout-body">
-        <!-- <MainView /> -->
-        <RouterView />
+        <router-view v-slot="{ Component }">
+          <transition name="slide-fade">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+        <!-- <RouterView /> -->
       </div>
     </div>
   </div>
@@ -23,7 +25,7 @@ import HeaderView from '../header/HeaderView.vue';
 <style scoped>
   .g-layout-wrapper {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     display: flex;
   }
   .g-layout-aside {
@@ -33,7 +35,7 @@ import HeaderView from '../header/HeaderView.vue';
     left: 0;
     top: 0;
     bottom: 0;
-    background-color: #fff;
+    background-color: var(--el-fill-color-blank);
   }
   .g-layout-main {
     padding-left: 256px;
@@ -47,12 +49,26 @@ import HeaderView from '../header/HeaderView.vue';
     height: 64px;
     display: flex;
     align-items: center;
-    background-color: #fff;
-    z-index: 2622;
+    background-color: var(--el-fill-color-blank);
+    /* z-index: 2622; */
+    z-index: 22;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
     transition: all .2s ease-in-out;
   }
   .g-layout-body {
     padding: 80px 16px 16px 16px;
+  }
+  .slide-fade-enter-active {
+    transition: all 0.2s;
+    opacity: 0;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.2s;
+    opacity: 1;
+  }
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateX(-20px);
+    opacity: 0;
   }
 </style>
