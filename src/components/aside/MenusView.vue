@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import {
   Setting,
   Odometer,
-  Discount,
-  Aim
+  // Discount,
+  // Aim
 } from '@element-plus/icons-vue'
+import { routes } from '@/router';
+import { useQuickMenus } from '@/stores/quickMenus';
+const { addQuickMenus } = useQuickMenus()
 const router = useRouter()
 const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -15,9 +19,9 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
-const handleRouterLink = (url: string) => {
-  console.log(url)
-  router.push(url)
+const handleRouterLink = (obj: RouteRecordRaw) => {
+  addQuickMenus(obj)
+  router.push(obj.path)
 }
 </script>
 
@@ -29,7 +33,27 @@ const handleRouterLink = (url: string) => {
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-menu-item index="1" @click="handleRouterLink('/')">
+    <template v-for="item in routes[0].children" :key="item.name">
+      <el-menu-item v-if="!item.children" index="1" @click="handleRouterLink(item)">
+        <el-icon><Odometer /></el-icon>
+        <template #title>{{item.meta?.title}}</template>
+      </el-menu-item>
+      <el-sub-menu v-else :key="item.name">
+        <template #title>
+          <el-icon><Setting /></el-icon>
+          <span>{{item.meta?.title}}</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item v-for="menu in item.children"
+            :key="menu.name"
+            @click="handleRouterLink(menu)"
+          >
+            {{menu.meta?.title}}
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-sub-menu>
+    </template>
+    <!-- <el-menu-item index="1" @click="handleRouterLink('/')">
       <el-icon><Odometer /></el-icon>
       <template #title>控制台</template>
     </el-menu-item>
@@ -64,7 +88,7 @@ const handleRouterLink = (url: string) => {
         <el-menu-item index="4-1" @click="handleRouterLink('/setting/user')">个人设置</el-menu-item>
         <el-menu-item index="4-2" @click="handleRouterLink('/setting/account')">账户设置</el-menu-item>
       </el-menu-item-group>
-    </el-sub-menu>
+    </el-sub-menu> -->
   </el-menu>
 </template>
 

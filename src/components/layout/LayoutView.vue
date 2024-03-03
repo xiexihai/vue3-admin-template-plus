@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { RouterView, useRouter } from 'vue-router'
 import AsideView from '../aside/AsideView.vue';
 import HeaderView from '../header/HeaderView.vue';
+const router = useRouter()
+const isLoading = ref(false)
+onMounted(() => {
+  if (localStorage.getItem('login')) {
+    isLoading.value = true
+  } else {
+    isLoading.value = false
+    router.replace('/login')
+  }
+})
 </script>
 
 <template>
-  <div class="g-layout-wrapper">
+  <div v-if="isLoading" class="g-layout-wrapper">
     <div class="g-layout-aside">
       <AsideView />
     </div>
@@ -21,6 +32,7 @@ import HeaderView from '../header/HeaderView.vue';
       </div>
     </div>
   </div>
+  <div v-else><el-skeleton :rows="5" animated /></div>
 </template>
 <style scoped>
   .g-layout-wrapper {
