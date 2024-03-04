@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import {
   Setting,
@@ -8,43 +8,49 @@ import {
   // Discount,
   // Aim
 } from '@element-plus/icons-vue'
-import { routes } from '@/router';
+// import { routes } from '@/router';
 import { useQuickMenus } from '@/stores/quickMenus';
+import { useMenus } from '@/stores/menus';
 const { addQuickMenus } = useQuickMenus()
+const { menus } = useMenus()
 const router = useRouter()
+const route = useRoute()
 const isCollapse = ref(false)
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+
+const defaultActive = ref(route.path || '/') // 默认选中的菜单
+
 const handleRouterLink = (obj: RouteRecordRaw) => {
   addQuickMenus(obj)
   router.push(obj.path)
 }
+// 监听路由变化，设置默认选中菜单
+watch(() => route.path, (val) => {
+  defaultActive.value = val
+})
+console.log('menus', menus)
 </script>
 
 <template>
   <el-menu
-    default-active="2"
-    :collapse="isCollapse"
     class="g-aside-menus"
-    @open="handleOpen"
-    @close="handleClose"
+    :default-active="defaultActive"
+    :collapse="isCollapse"
+    :unique-opened="true"
   >
-    <template v-for="item in routes[0].children" :key="item.name">
-      <el-menu-item v-if="!item.children" index="1" @click="handleRouterLink(item)">
+    <template v-for="item in menus" :key="item.name">
+      <el-menu-item v-if="!item.children" :index="item.path" @click="handleRouterLink(item)">
         <el-icon><Odometer /></el-icon>
         <template #title>{{item.meta?.title}}</template>
       </el-menu-item>
-      <el-sub-menu v-else :key="item.name">
+      <el-sub-menu v-else :key="item.name" :index="item.path">
         <template #title>
           <el-icon><Setting /></el-icon>
           <span>{{item.meta?.title}}</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item v-for="menu in item.children"
+          <el-menu-item
+            v-for="menu in item.children"
+            :index="menu.path"
             :key="menu.name"
             @click="handleRouterLink(menu)"
           >

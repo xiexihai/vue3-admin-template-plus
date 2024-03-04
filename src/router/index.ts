@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router';
 // import {
 //   Setting,
@@ -9,6 +9,8 @@ import type { RouteRecordRaw } from 'vue-router';
 import LayoutView from '@/components/layout/LayoutView.vue';
 const LoginView = () => import('@/views/login/LoginView.vue') 
 import settingRoutes from './setting'
+// import { useMenus } from '@/stores/menus';
+// const {addMenus} = useMenus()
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -103,11 +105,6 @@ export const routes: RouteRecordRaw[] = [
       },
     ]
   },
-  {
-    path: '/login',
-    name: 'login',
-    component: LoginView
-  }
 ]
 /* @function 平铺菜单
 * @params { menus } array
@@ -128,8 +125,27 @@ export function flatMenus(menus: RouteRecordRaw[]) {
   return result
 }
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  // history: createWebHistory(import.meta.env.BASE_URL),
+  // 由于部署到github，history模式刷新404问题，所以暂时使用hash模式
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: LayoutView,
+      redirect: '/dashboard',
+      meta: {
+        title: '控制台'
+      },
+      children: flatMenus(routes)
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    }
+  ]
 })
+
 
 export default router

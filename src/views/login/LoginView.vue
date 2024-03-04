@@ -2,8 +2,13 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router';
+import { getUserMenus } from '@/apis';
+import { useMenus } from '@/stores/menus';
+
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter()
+const { addMenus } = useMenus()
+const loading = ref(false)
 
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (value === '') {
@@ -21,8 +26,8 @@ const validatePassword = (rule: any, value: any, callback: any) => {
 }
 
 const ruleForm = reactive({
-  username: '',
-  password: '',
+  username: 'admin',
+  password: 'admin',
 })
 
 const rules = reactive<FormRules<typeof ruleForm>>({
@@ -35,10 +40,16 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       console.log('submit!')
+      loading.value = true
       localStorage.setItem('login', JSON.stringify({
         username: ruleForm.username
       }))
-      router.push('/')
+      getUserMenus(ruleForm.username).then(res => {
+        console.log(res)
+        addMenus(res)
+        loading.value = false
+        router.push('/')
+      })
     } else {
       console.log('error submit!')
       return false
@@ -49,8 +60,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
 </script>
 
 <template>
-  <div class="g-login-wrapper">
+  <div class="g-login-wrapper" v-loading="loading" element-loading-text="正在登录中...">
     <h1>vue3企业级管理后台</h1>
+    <span>使用admin模拟获取超级管理员菜单，其他账户获取普通用户菜单</span>
     <el-form
       ref="ruleFormRef"
       :model="ruleForm"
@@ -60,13 +72,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
       class="login-Form"
     >
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
+        <el-input v-model="ruleForm.username" placeholder="admin" type="text" autocomplete="off" />
       </el-form-item>
       <el-form-item label="秘密" prop="password">
         <el-input
           v-model="ruleForm.password"
           type="password"
           autocomplete="off"
+          placeholder="admin"
         />
       </el-form-item>
       <el-form-item>

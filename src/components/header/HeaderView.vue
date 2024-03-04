@@ -11,6 +11,7 @@ const username = ref('')
 
 const handleLogout = () => {
   localStorage.removeItem('login')
+  localStorage.removeItem('menus')
   router.replace('/login')
 }
 
