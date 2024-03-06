@@ -12,7 +12,7 @@ export const adminMenus: RouteRecordRaw[] = [
     meta: {
       title: '控制台'
     },
-    component: import('../views/main/MainView.vue'),
+    component: () => import('../views/main/MainView.vue'),
   },
   {
     path: '/system',
@@ -93,7 +93,7 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '账户设置',
         },
-        component: import('../views/setting/AccountView.vue')
+        component: () => import('../views/setting/AccountView.vue')
       },
       {
         name: 'settingUser',
@@ -101,7 +101,7 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '个人设置',
         },
-        component: import('../views/setting/UserView.vue')
+        component: () => import('../views/setting/UserView.vue')
       }
     ]
   }
@@ -114,7 +114,7 @@ export const userMenus: RouteRecordRaw[] = [
     meta: {
       title: '控制台'
     },
-    component: import('../views/main/MainView.vue'),
+    component: () => import('../views/main/MainView.vue'),
   },
   {
     path: '/system',
