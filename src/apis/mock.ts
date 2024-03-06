@@ -91,7 +91,7 @@ export const adminMenus: RouteRecordRaw[] = [
         name: 'settingAccount',
         path: '/setting/account',
         meta: {
-          title: '个人设置',
+          title: '账户设置',
         },
         component: import('../views/setting/AccountView.vue')
       },
@@ -99,7 +99,7 @@ export const adminMenus: RouteRecordRaw[] = [
         name: 'settingUser',
         path: '/setting/user',
         meta: {
-          title: '账户设置',
+          title: '个人设置',
         },
         component: import('../views/setting/UserView.vue')
       }
