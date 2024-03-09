@@ -1,0 +1,1 @@
+import{_ as o,c as s,o as t,p as c,h as a,i as _}from"./index-A_uCtuWB.js";const d={},n=e=>(c("data-v-5b198f27"),e=e(),a(),e),p={class:"table"},r=n(()=>_("h1",null,"404 page",-1)),i=[r];function f(e,h){return t(),s("div",p,i)}const u=o(d,[["render",f],["__scopeId","data-v-5b198f27"]]);export{u as default};
