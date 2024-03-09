@@ -6,6 +6,6 @@ export const getUserMenus = (type = 'admin'): Promise<RouteRecordRaw[]> => {
     // 这里真实场景可以替换成接口
     setTimeout(() => {
       resolve(type === 'admin' ? adminMenus : userMenus)
-    }, 1500)
+    }, 1000)
   })
 }

@@ -15,14 +15,17 @@ const handleChangeTab = (url: string) => {
 }
 const handleRemoveTab = (url: string) => {
   const curIndex = menus.findIndex(item => item.path === url)
-  if (curMenu.value === url && menus.length && curIndex > 0) {
-    const prevPath = menus[curIndex - 1]?.path
+  delQuickMenus(curIndex, menus)
+  if (curMenu.value === url && menus.length) {
+    console.log('ss')
+    const prevPath = menus[menus.length - 1]?.path
+    console.log(prevPath)
     curMenu.value = prevPath
     router.push(prevPath)
   } else if (menus.length === 0) {
     router.push(menus[0]?.path)
   }
-  delQuickMenus(curIndex, menus)
+  
 }
 
 watch(() => route.path, (val) => {
@@ -43,7 +46,7 @@ watch(() => route.path, (val) => {
       class="g-tabs"
       size="small"
       v-model="curMenu"
-      closable
+      :closable="menus.length > 1"
       @tab-change="handleChangeTab"
       @tab-remove="handleRemoveTab"
     >

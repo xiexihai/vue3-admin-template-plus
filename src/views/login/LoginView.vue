@@ -2,12 +2,12 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router';
-import { getUserMenus } from '@/apis';
-import { useMenus } from '@/stores/menus';
+// import { getUserMenus } from '@/apis';
+// import { useMenus } from '@/stores/menus';
 
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter()
-const { addMenus } = useMenus()
+// const { addMenus } = useMenus()
 const loading = ref(false)
 
 const validateUsername = (rule: any, value: any, callback: any) => {
@@ -44,12 +44,15 @@ const submitForm = (formEl: FormInstance | undefined) => {
       localStorage.setItem('login', JSON.stringify({
         username: ruleForm.username
       }))
-      getUserMenus(ruleForm.username).then(res => {
-        console.log(res)
-        addMenus(res)
-        loading.value = false
-        router.push('/')
-      })
+
+      loading.value = false
+      router.push('/')
+      // getUserMenus(ruleForm.username).then(res => {
+      //   console.log(res)
+      //   addMenus(res)
+      //   loading.value = false
+      //   router.push('/')
+      // })
     } else {
       console.log('error submit!')
       return false

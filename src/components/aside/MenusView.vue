@@ -12,10 +12,12 @@ import {
 import { useQuickMenus } from '@/stores/quickMenus';
 import { useMenus } from '@/stores/menus';
 const { addQuickMenus } = useQuickMenus()
-const { menus } = useMenus()
+const { sidebar } = useMenus()
 const router = useRouter()
 const route = useRoute()
 const isCollapse = ref(false)
+
+const menus = ref(sidebar.menus || [])
 
 const defaultActive = ref(route.path || '/') // 默认选中的菜单
 
@@ -27,7 +29,13 @@ const handleRouterLink = (obj: RouteRecordRaw) => {
 watch(() => route.path, (val) => {
   defaultActive.value = val
 })
-console.log('menus', menus)
+
+
+watch(() => sidebar.menus, (val) => {
+  console.log('sss', val)
+  menus.value = val
+})
+console.log('sidebar', sidebar.menus)
 </script>
 
 <template>

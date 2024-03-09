@@ -1,22 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { RouterView, useRouter } from 'vue-router'
+import { RouterView } from 'vue-router';
+import { useMenus } from '@/stores/menus';
 import AsideView from '../aside/AsideView.vue';
 import HeaderView from '../header/HeaderView.vue';
-const router = useRouter()
-const isLoading = ref(false)
-onMounted(() => {
-  if (localStorage.getItem('login')) {
-    isLoading.value = true
-  } else {
-    isLoading.value = false
-    router.replace('/login')
-  }
-})
+const { sidebar } = useMenus()
 </script>
-
 <template>
-  <div v-if="isLoading" class="g-layout-wrapper">
+  <div class="g-layout-wrapper" v-if="!!sidebar.menus.length">
     <div class="g-layout-aside">
       <AsideView />
     </div>
@@ -28,7 +18,6 @@ onMounted(() => {
             <component :is="Component" />
           </transition>
         </router-view>
-        <!-- <RouterView /> -->
       </div>
     </div>
   </div>

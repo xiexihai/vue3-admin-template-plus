@@ -8,9 +8,11 @@ import type { RouteRecordRaw } from 'vue-router';
 // } from '@element-plus/icons-vue'
 import LayoutView from '@/components/layout/LayoutView.vue';
 const LoginView = () => import('@/views/login/LoginView.vue') 
+const NotFoundView = () => import('@/views/main/NotFoundView.vue') 
 import { adminMenus } from '@/apis/mock';
-// import { useMenus } from '@/stores/menus';
-// const {addMenus} = useMenus()
+import { getUserMenus } from '@/apis';
+import { useMenus } from '@/stores/menus';
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -54,15 +56,62 @@ const router = createRouter({
       meta: {
         title: '控制台'
       },
+      // children: [
+        // {
+        //   path: '/404',
+        //   name: 'NotFound',
+        //   component: NotFoundView
+        // }
+      // ]
       children: flatMenus(routes)
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/404',
+      name: 'NotFound',
+      component: NotFoundView
     }
   ]
 })
 
+router.beforeEach((to, form, next) => {
+  const { setSidebar} = useMenus()
+  const loginInfo = localStorage.getItem('login')
+  if (!loginInfo && to.name !== 'login') {
+    next({
+      name: 'login'
+    })
+  }else {
+    if (loginInfo) {
+     getUserMenus(JSON.parse(loginInfo).username).then(res => {
+        router.addRoute({
+          path: '/',
+          name: 'home',
+          component: LayoutView,
+          redirect: '/dashboard',
+          meta: {
+            title: '控制台'
+          },
+          children: res
+        })
+        setSidebar(res)
+        if (!to.name) {
+          router.push('/404')
+          next()
+        } else {
+          next({
+            ...to,
+            replace: true
+          })
+        }
+      })
+    }
+  }
+  next()
+})
 
 export default router

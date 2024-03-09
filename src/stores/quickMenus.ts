@@ -17,5 +17,8 @@ export const useQuickMenus = defineStore('quickMenus', () => {
     localStorage.setItem('quickMenus', JSON.stringify(menus))
     return menus
   }
-  return { menus, addQuickMenus, delQuickMenus }
+  function resetQuickMenus() {
+    menus.length = 0
+  }
+  return { menus, addQuickMenus, delQuickMenus, resetQuickMenus }
 })
