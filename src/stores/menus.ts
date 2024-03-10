@@ -1,15 +1,16 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
-import type { RouteRecordRaw } from 'vue-router'
+// import type { RouteRecordRaw } from 'vue-router'
+import type { IMenuItem } from '@/apis/mock'
 interface ISidebar {
-  menus: RouteRecordRaw[]
+  menus: IMenuItem[]
 }
 export const useMenus = defineStore('menus', () => {
 
   const sidebar: ISidebar = reactive({
     menus: []
   })
-  function setSidebar(data: RouteRecordRaw[]) {
+  function setSidebar(data: IMenuItem[]) {
     sidebar.menus = data
   }
   function resetSidebar() {

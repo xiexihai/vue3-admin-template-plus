@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { useMenus } from '@/stores/menus';
 import AsideView from '../aside/AsideView.vue';
 import HeaderView from '../header/HeaderView.vue';
-const { sidebar } = useMenus()
 </script>
 <template>
-  <div class="g-layout-wrapper" v-if="!!sidebar.menus.length">
+  <div class="g-layout-wrapper">
     <div class="g-layout-aside">
       <AsideView />
     </div>
@@ -14,14 +12,13 @@ const { sidebar } = useMenus()
       <HeaderView />
       <div class="g-layout-body">
         <router-view v-slot="{ Component }">
-          <transition name="slide-fade">
+          <transition name="g-slide-fade">
             <component :is="Component" />
           </transition>
         </router-view>
       </div>
     </div>
   </div>
-  <div v-else><el-skeleton :rows="5" animated /></div>
 </template>
 <style scoped>
   .g-layout-wrapper {
@@ -59,16 +56,16 @@ const { sidebar } = useMenus()
   .g-layout-body {
     padding: 80px 16px 16px 16px;
   }
-  .slide-fade-enter-active {
+  .g-slide-fade-enter-active {
     transition: all 0.2s;
     opacity: 0;
   }
-  .slide-fade-leave-active {
+  .g-slide-fade-leave-active {
     transition: all 0.2s;
     opacity: 1;
   }
-  .slide-fade-enter-from,
-  .slide-fade-leave-to {
+  .g-slide-fade-enter-from,
+  .g-slide-fade-leave-to {
     transform: translateX(-20px);
     opacity: 0;
   }

@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router';
+// import type { RouteRecordRaw } from 'vue-router';
 // import {
 //   Setting,
 //   Odometer,
@@ -9,29 +9,17 @@ import type { RouteRecordRaw } from 'vue-router';
 import LayoutView from '@/components/layout/LayoutView.vue';
 const LoginView = () => import('@/views/login/LoginView.vue') 
 const NotFoundView = () => import('@/views/main/NotFoundView.vue') 
-import { adminMenus } from '@/apis/mock';
 import { getUserMenus } from '@/apis';
 import { useMenus } from '@/stores/menus';
+import { type IMenuItem } from '@/apis/mock';
 
-export const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    name: 'home',
-    component: LayoutView,
-    redirect: '/dashboard',
-    meta: {
-      title: '控制台'
-    },
-    children: adminMenus
-  },
-]
 /* @function 平铺菜单
 * @params { menus } array
 * @return { result } array
 */
-export function flatMenus(menus: RouteRecordRaw[]) {
-  const result: RouteRecordRaw[] = []
-  const flatChildren = (rows: RouteRecordRaw[]) => {
+export function flatMenus(menus: IMenuItem[]) {
+  const result: IMenuItem[] = []
+  const flatChildren = (rows: IMenuItem[]) => {
     rows.forEach((item) => {
       if(item.children) {
         flatChildren(item.children)
@@ -56,14 +44,7 @@ const router = createRouter({
       meta: {
         title: '控制台'
       },
-      // children: [
-        // {
-        //   path: '/404',
-        //   name: 'NotFound',
-        //   component: NotFoundView
-        // }
-      // ]
-      children: flatMenus(routes)
+      children: []
     },
     {
       path: '/login',
@@ -79,39 +60,34 @@ const router = createRouter({
 })
 
 router.beforeEach((to, form, next) => {
-  const { setSidebar} = useMenus()
+  const { sidebar, setSidebar} = useMenus()
   const loginInfo = localStorage.getItem('login')
   if (!loginInfo && to.name !== 'login') {
-    next({
-      name: 'login'
-    })
-  }else {
+    next({ name: 'login' })
+  } else {
     if (loginInfo) {
-     getUserMenus(JSON.parse(loginInfo).username).then(res => {
-        router.addRoute({
-          path: '/',
-          name: 'home',
-          component: LayoutView,
-          redirect: '/dashboard',
-          meta: {
-            title: '控制台'
-          },
-          children: res
-        })
-        setSidebar(res)
-        if (!to.name) {
-          router.push('/404')
-          next()
-        } else {
-          next({
-            ...to,
-            replace: true
+     if (sidebar.menus.length) {
+      next()
+     } else {
+        const username = JSON.parse(loginInfo).username
+        getUserMenus(username).then(res => {
+          flatMenus(res).forEach(item => {
+            const obj = {
+              name: item.name,
+              path: item.path,
+              meta: item.meta,
+              component: () => import(`@/${item.component}.vue`)
+            }
+            if(item.name && !router.hasRoute(item.name) )router.addRoute('home', obj)
           })
-        }
-      })
+          setSidebar(res)
+          next({...to, replace: true})
+        })
+      }
+    } else {
+      next()
     }
   }
-  next()
 })
 
 export default router

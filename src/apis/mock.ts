@@ -1,49 +1,58 @@
-import type { RouteRecordRaw } from 'vue-router';
-
 /*
-* 默认接口请求返回菜单信息
+* 模拟接口请求返回菜单信息
 */
+export type IMenuItem = {
+  path: string, // 路由跳转路径
+  name: string, // 路由名称
+  meta: { // 路由额外信息
+    title: string, // 菜单名称
+    [x: string]: string | number
+  },
+  component: string, // 路由对应的组件地址，前端通过该地址做映射
+  children?: IMenuItem[] // IMenuItem
+}
 
 // 超级管理员（全部菜单）
-export const adminMenus: RouteRecordRaw[] = [
+export const adminMenus: IMenuItem[] = [
   {
     path: '/dashboard',
-    name: 'home',
+    name: 'dashboard',
     meta: {
       title: '控制台'
     },
-    component: () => import('../views/main/MainView.vue'),
+    component: 'views/main/MainView'
   },
   {
     path: '/system',
     name: 'system',
     meta: {
-      title: '系统管理',
+      title: '系统管理'
     },
+    component: 'views/system',
     children: [
       {
         path: '/system/user',
         name: 'systemUser',
         meta: {
-          title: '用户管理',
+          title: '用户管理'
         },
-        component: () => import('../views/system/UserView.vue')
+        component: 'views/system/UserView'
       },
       {
         path: '/system/menus',
         name: 'systemMenus',
         meta: {
-          title: '菜单权限管理',
+          title: '菜单权限管理'
         },
-        component: () => import('../views/system/MenusView.vue')
+        component: 'views/system/MenusView'
       },
       {
         path: '/system/role',
         name: 'systemRole',
         meta: {
-          title: '角色权限管理',
+          title: '角色权限管理'
         },
-        component: () => import('../views/system/RoleView.vue')
+        component: 'views/system/RoleView'
       }
     ]
   },
@@ -53,6 +62,7 @@ export const adminMenus: RouteRecordRaw[] = [
     meta: {
       title: '表单页面',
     },
+    component: 'views/form',
     children: [
       {
         path: '/form/basic',
@@ -60,7 +70,7 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '基础表单',
         },
-        component: () => import('../views/form/FormBasicView.vue')
+        component: 'views/form/FormBasicView'
       },
       {
         path: '/form/grade',
@@ -68,7 +78,7 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '高级表单',
         },
-        component: () => import('../views/form/FormGradeView.vue')
+        component: 'views/form/FormGradeView'
       },
       {
         path: '/form/detail',
@@ -76,7 +86,7 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '表单详情',
         },
-        component: () => import('../views/form/FormDetailView.vue')
+        component: 'views/form/FormDetailView'
       }
     ]
   },
@@ -86,6 +96,7 @@ export const adminMenus: RouteRecordRaw[] = [
     meta: {
       title: '设置页面',
     },
+    component: 'views/setting',
     children: [
       {
         name: 'settingAccount',
@@ -93,7 +104,7 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '账户设置',
         },
-        component: () => import('../views/setting/AccountView.vue')
+        component: 'views/setting/AccountView'
       },
       {
         name: 'settingUser',
@@ -101,20 +112,20 @@ export const adminMenus: RouteRecordRaw[] = [
         meta: {
           title: '个人设置',
         },
-        component: () => import('../views/setting/UserView.vue')
+        component: 'views/setting/UserView'
       }
     ]
   }
 ]
 // 普通管理员（部分菜单）
-export const userMenus: RouteRecordRaw[] = [
+export const userMenus: IMenuItem[] = [
   {
     path: '/dashboard',
     name: 'home',
     meta: {
       title: '控制台'
     },
-    component: () => import('../views/main/MainView.vue'),
+    component: 'views/main/MainView',
   },
   {
     path: '/system',
@@ -122,22 +133,23 @@ export const userMenus: RouteRecordRaw[] = [
     meta: {
       title: '系统管理',
     },
+    component: 'views/system',
     children: [
-      {
-        path: '/system/user',
-        name: 'systemUser',
-        meta: {
-          title: '用户管理',
-        },
-        component: () => import('../views/system/UserView.vue')
-      },
+      // {
+      //   path: '/system/user',
+      //   name: 'systemUser',
+      //   meta: {
+      //     title: '用户管理',
+      //   },
+      //   component: 'views/system/UserView'
+      // },
       {
         path: '/system/role',
         name: 'systemRole',
         meta: {
           title: '角色权限管理',
         },
-        component: () => import('../views/system/RoleView.vue')
+        component: 'views/system/RoleView'
       }
     ]
   },
@@ -147,6 +159,7 @@ export const userMenus: RouteRecordRaw[] = [
     meta: {
       title: '表单页面',
     },
+    component: 'views/form',
     children: [
       {
         path: '/form/basic',
@@ -154,7 +167,7 @@ export const userMenus: RouteRecordRaw[] = [
         meta: {
           title: '基础表单',
         },
-        component: () => import('../views/form/FormBasicView.vue')
+        component: 'views/form/FormBasicView'
       },
       {
         path: '/form/detail',
@@ -162,7 +175,7 @@ export const userMenus: RouteRecordRaw[] = [
         meta: {
           title: '表单详情',
         },
-        component: () => import('../views/form/FormDetailView.vue')
+        component: 'views/form/FormDetailView'
       }
     ]
   }

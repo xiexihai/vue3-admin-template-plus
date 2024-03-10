@@ -4,6 +4,7 @@ import type { FormInstance, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router';
 // import { getUserMenus } from '@/apis';
 // import { useMenus } from '@/stores/menus';
+import BgLogin from "@/assets/images/bg-login.png"
 
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter()
@@ -64,33 +65,44 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 <template>
   <div class="g-login-wrapper" v-loading="loading" element-loading-text="正在登录中...">
-    <h1>vue3企业级管理后台</h1>
-    <span>使用admin模拟获取超级管理员菜单，其他账户获取普通用户菜单</span>
-    <el-form
-      ref="ruleFormRef"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      label-width="auto"
-      class="login-Form"
-    >
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm.username" placeholder="admin" type="text" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="秘密" prop="password">
-        <el-input
-          v-model="ruleForm.password"
-          type="password"
-          autocomplete="off"
-          placeholder="admin"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm(ruleFormRef)"
-          >登录</el-button
+    <div class="g-login-left">
+      <img :src="BgLogin" style="max-width: 600px;" />
+    </div>
+    <div class="g-login-right">
+      <div class="g-login-content">
+        <h1>vue3企业级管理后台</h1>
+        <!-- <span>使用admin模拟获取超级管理员菜单，其他账户获取普通用户菜单</span> -->
+        <el-form
+          ref="ruleFormRef"
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          size="large"
+          label-width="auto"
+          class="g-login-form"
         >
-      </el-form-item>
-    </el-form>
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="ruleForm.username" placeholder="admin" type="text" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="秘密" prop="password">
+            <el-input
+              v-model="ruleForm.password"
+              type="password"
+              autocomplete="off"
+              placeholder="admin"
+            />
+          </el-form-item>
+          <el-form-item label="&nbsp;">
+            <el-button type="primary" style="width: 100%; " @click="submitForm(ruleFormRef)"
+              >登录</el-button
+            >
+          </el-form-item>
+        </el-form>
+        <div class="g-login-foot">
+          <el-button link type="primary">忘记密码？</el-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -98,15 +110,26 @@ const submitForm = (formEl: FormInstance | undefined) => {
   width: 100%;
   height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(#4082ffad, #409eff1c, #4069ffab);
 }
-.login-Form {
+.g-login-left {
+  margin-right: 50px;
+}
+.g-login-content {
   width: 400px;
   padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 -5px 100px #bbb;
+  border-radius: 8px;
+  box-shadow: 0 -5px 100px #fff;
   background-color: #fff;
+  text-align: center;
+}
+.g-login-form {
+  padding: 12px 0;
+}
+.g-login-foot {
+  text-align: right;
+  margin-top: -30px;
 }
 </style>
