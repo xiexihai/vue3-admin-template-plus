@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
+import type { IMenuItem } from '@/apis/mock'
 import {
   Setting,
   Odometer,
@@ -21,7 +21,7 @@ const menus = ref(sidebar.menus || [])
 
 const defaultActive = ref(route.path || '/') // 默认选中的菜单
 
-const handleRouterLink = (obj: RouteRecordRaw) => {
+const handleRouterLink = (obj: IMenuItem) => {
   addQuickMenus(obj)
   router.push(obj.path)
 }
