@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
-import { ArrowRight } from '@element-plus/icons-vue'
 import { useQuickMenus } from '../../stores/quickMenus'
 const { menus, delQuickMenus } = useQuickMenus()
 const route = useRoute()
@@ -36,11 +35,6 @@ watch(() => route.path, (val) => {
 </script>
 <template>
   <div class="g-breadcrumb">
-    <el-breadcrumb :separator-icon="ArrowRight" class="g-breadcrumb-list">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>控制台</el-breadcrumb-item>
-      <el-breadcrumb-item>基础表单</el-breadcrumb-item>
-    </el-breadcrumb>
     <el-tabs
       type="card"
       class="g-tabs"
@@ -60,25 +54,44 @@ watch(() => route.path, (val) => {
     </el-tabs>
   </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
 .g-breadcrumb {
   padding: 16px;
   flex: 1;
+  overflow: hidden;
 }
-.g-breadcrumb-list {
-  margin-top: -22px;
-}
+
 .g-tabs {
   --el-tabs-header-height: 32px;
-  position: absolute;
-  bottom: 0;
 }
-.g-tabs /deep/ .el-tabs__header {
+.g-tabs :deep(.el-tabs__header) {
   border-bottom: none !important;
   margin-bottom: 1px;
 }
-.g-tabs /deep/ .el-tabs__item {
-  border-bottom: none;
+.g-tabs :deep(.el-tabs__item) {
+  border: 1px solid var(--el-color-primary-light-9);
+  margin: 0 5px;
+  border-radius: 2px;
+  &.is-active {
+    border-bottom-color: var(--el-color-primary-light-9);
+  }
+  &:first-child {
+    border-left: 1px solid var(--el-color-primary-light-9);
+  }
+}
+.g-tabs {
+  :deep(.el-tabs__header .el-tabs__nav) {
+    border: none !important;
+  }
+}
+.g-tabs {
+  :deep(.el-tabs__nav-prev),
+  :deep(.el-tabs__nav-next) {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,21,41,.08);
+  }
 }
 </style>
 

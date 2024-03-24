@@ -1,3 +1,10 @@
+import {
+  Setting,
+  Odometer,
+  Discount,
+  Aim
+} from '@element-plus/icons-vue'
+import type { Component } from 'vue'
 /*
 * 模拟接口请求返回菜单信息
 */
@@ -6,7 +13,7 @@ export type IMenuItem = {
   name: string, // 路由名称
   meta: { // 路由额外信息
     title: string, // 菜单名称
-    [x: string]: string | number
+    [x: string]: string | number | Component
   },
   component: string, // 路由对应的组件地址，前端通过该地址做映射
   children?: IMenuItem[] // IMenuItem
@@ -18,7 +25,8 @@ export const adminMenus: IMenuItem[] = [
     path: '/dashboard',
     name: 'dashboard',
     meta: {
-      title: '控制台'
+      title: '控制台',
+      icons: Odometer
     },
     component: 'views/main/MainView'
   },
@@ -26,7 +34,8 @@ export const adminMenus: IMenuItem[] = [
     path: '/system',
     name: 'system',
     meta: {
-      title: '系统管理'
+      title: '系统管理',
+      icons: Discount
     },
     component: 'views/system',
     children: [
@@ -61,6 +70,7 @@ export const adminMenus: IMenuItem[] = [
     name: 'form',
     meta: {
       title: '表单页面',
+      icons: Aim
     },
     component: 'views/form',
     children: [
@@ -95,6 +105,7 @@ export const adminMenus: IMenuItem[] = [
     name: 'setting',
     meta: {
       title: '设置页面',
+      icons: Setting
     },
     component: 'views/setting',
     children: [

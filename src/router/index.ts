@@ -78,7 +78,7 @@ router.beforeEach((to, form, next) => {
               meta: item.meta,
               component: () => import(`@/${item.component}.vue`)
             }
-            if(item.name && !router.hasRoute(item.name) )router.addRoute('home', obj)
+            if(item.name && !router.hasRoute(item.name))router.addRoute('home', obj)
           })
           setSidebar(res)
           next({...to, replace: true})

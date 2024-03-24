@@ -45,15 +45,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       localStorage.setItem('login', JSON.stringify({
         username: ruleForm.username
       }))
-
-      loading.value = false
       router.push('/')
-      // getUserMenus(ruleForm.username).then(res => {
-      //   console.log(res)
-      //   addMenus(res)
-      //   loading.value = false
-      //   router.push('/')
-      // })
     } else {
       console.log('error submit!')
       return false

@@ -1,43 +1,36 @@
 <script setup lang="ts">
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
+
 </script>
 
 <template>
-  <div class="table">
-    <span class="title">title</span>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="date" label="Date" width="180" />
-      <el-table-column prop="name" label="Name" width="180" />
-      <el-table-column prop="address" label="Address" />
-    </el-table>
+  <div class="main">
+    <el-row :gutter="20">
+      <el-col :span="6"><div class="grid-content">1</div></el-col>
+      <el-col :span="6"><div class="grid-content">2</div></el-col>
+      <el-col :span="6"><div class="grid-content">3</div></el-col>
+      <el-col :span="6"><div class="grid-content">4</div></el-col>
+    </el-row>
+    <el-row :gutter="20" class="group">
+      <el-col :span="8"><div class="grid-content">1</div></el-col>
+      <el-col :span="8"><div class="grid-content">2</div></el-col>
+      <el-col :span="8"><div class="grid-content">3</div></el-col>
+    </el-row>
+    <el-row :gutter="20" class="group">
+      <el-col :span="12"><div class="grid-content">1</div></el-col>
+      <el-col :span="12"><div class="grid-content">2</div></el-col>
+    </el-row>
   </div>
 </template>
 
 <style scoped lang="scss">
-.table {
-  .title {
-    font-size: 20px;
+.grid-content {
+  height: 100px;
+  background-color: #fff;
+}
+.group {
+  margin-top: 20px;
+  .grid-content {
+    height: 300px;
   }
 }
 </style>
