@@ -52,8 +52,7 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/404',
-      name: 'NotFound',
+      path: '/:pathMatch(.*)',
       component: NotFoundView
     }
   ]
@@ -80,6 +79,7 @@ router.beforeEach((to, form, next) => {
             }
             if(item.name && !router.hasRoute(item.name))router.addRoute('home', obj)
           })
+          console.log('res=>', res)
           setSidebar(res)
           next({...to, replace: true})
         })

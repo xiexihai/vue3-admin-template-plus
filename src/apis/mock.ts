@@ -13,7 +13,7 @@ export type IMenuItem = {
   name: string, // 路由名称
   meta: { // 路由额外信息
     title: string, // 菜单名称
-    [x: string]: string | number | Component
+    [x: string]: string | number | Component | string[]
   },
   component: string, // 路由对应的组件地址，前端通过该地址做映射
   children?: IMenuItem[] // IMenuItem
@@ -43,7 +43,8 @@ export const adminMenus: IMenuItem[] = [
         path: '/system/user',
         name: 'systemUser',
         meta: {
-          title: '用户管理'
+          title: '用户管理',
+          permissions: ['edit', 'del']
         },
         component: 'views/system/UserView'
       },
@@ -132,9 +133,10 @@ export const adminMenus: IMenuItem[] = [
 export const userMenus: IMenuItem[] = [
   {
     path: '/dashboard',
-    name: 'home',
+    name: 'dashboard',
     meta: {
-      title: '控制台'
+      title: '控制台',
+      icons: Odometer
     },
     component: 'views/main/MainView',
   },
@@ -143,25 +145,27 @@ export const userMenus: IMenuItem[] = [
     name: 'system',
     meta: {
       title: '系统管理',
+      icons: Discount
     },
     component: 'views/system',
     children: [
-      // {
-      //   path: '/system/user',
-      //   name: 'systemUser',
-      //   meta: {
-      //     title: '用户管理',
-      //   },
-      //   component: 'views/system/UserView'
-      // },
       {
-        path: '/system/role',
-        name: 'systemRole',
+        path: '/system/user',
+        name: 'systemUser',
         meta: {
-          title: '角色权限管理',
+          title: '用户管理',
+          permissions: ['edit']
         },
-        component: 'views/system/RoleView'
-      }
+        component: 'views/system/UserView'
+      },
+      // {
+      //   path: '/system/role',
+      //   name: 'systemRole',
+      //   meta: {
+      //     title: '角色权限管理',
+      //   },
+      //   component: 'views/system/RoleView'
+      // }
     ]
   },
   {
@@ -169,6 +173,7 @@ export const userMenus: IMenuItem[] = [
     name: 'form',
     meta: {
       title: '表单页面',
+      icons: Aim
     },
     component: 'views/form',
     children: [
