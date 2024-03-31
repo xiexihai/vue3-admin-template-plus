@@ -1,0 +1,1 @@
+import{_ as o,o as s,e as t,p as c,k as a,f as _}from"./index-BBOqdTm_.js";const d={},n=e=>(c("data-v-5b198f27"),e=e(),a(),e),p={class:"table"},r=n(()=>_("h1",null,"404 page",-1)),f=[r];function i(e,l){return s(),t("div",p,f)}const u=o(d,[["render",i],["__scopeId","data-v-5b198f27"]]);export{u as default};
